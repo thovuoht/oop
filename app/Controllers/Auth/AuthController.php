@@ -25,7 +25,6 @@ class AuthController extends Controller
         try {
             $data = $_POST;
 
-            // Validate
             $validator = new Validator;
 
             $errors = $this->validate(
@@ -60,7 +59,7 @@ class AuthController extends Controller
                 $_SESSION['data'] = null;
             }
 
-            $_SESSION['user'] = $user; // Lưu thông tin người dùng đã đăng nhập
+            $_SESSION['user'] = $user;
 
             $redirectTo = ($_SESSION['user']['type'] == 'admin') ? '/admin' : '/';
             redirect($redirectTo);
@@ -80,7 +79,6 @@ class AuthController extends Controller
         try {
             $data = $_POST;
 
-            // Validate
             $validator = new Validator;
 
             $errors = $this->validate(
@@ -114,13 +112,9 @@ class AuthController extends Controller
             } else {
                 $_SESSION['data'] = null;
             }
-
-            // Điểu chỉnh dữ liệu
             unset($data['confirm_password']);
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            $data['type'] = 'client'; // Mặc định chức năng đăng ký chỉ cho client
-
-            // Insert
+            $data['type'] = 'client';
             $this->user->insert($data);
 
             $_SESSION['status'] = true;
