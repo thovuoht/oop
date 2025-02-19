@@ -36,7 +36,6 @@ class CategoryController extends Controller
         try {
             $data = $_POST + $_FILES;
 
-            // Validate
             $validator = new Validator;
 
             $errors = $this->validate(
